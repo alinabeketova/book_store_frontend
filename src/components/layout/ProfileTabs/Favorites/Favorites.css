@@ -1,0 +1,276 @@
+.favorites-container {
+  background: white;
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.favorites-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f0f2f5;
+}
+
+.favorites-count {
+  font-size: 14px;
+  color: #666;
+}
+
+.btn-clear-favorites {
+  padding: 8px 16px;
+  background: #fff5f5;
+  color: #c92a2a;
+  border: 1px solid #ffc9c9;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-clear-favorites:hover {
+  background: #ffc9c9;
+}
+
+.favorites-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.favorite-card {
+  border: 1px solid #e9ecef;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.favorite-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  border-color: #4c6ef5;
+}
+
+.favorite-image-container {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+
+.favorite-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.favorite-card:hover .favorite-image {
+  transform: scale(1.05);
+}
+
+.favorite-actions {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  opacity: 0;
+  transform: translateX(10px);
+  transition: all 0.3s ease;
+}
+
+.favorite-card:hover .favorite-actions {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.btn-favorite-action {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: white;
+  color: #495057;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-remove-favorite {
+  color: #fa5252;
+}
+
+.btn-remove-favorite:hover {
+  background: #fff5f5;
+  color: #c92a2a;
+}
+
+.btn-add-to-cart {
+  color: #40c057;
+}
+
+.btn-add-to-cart:hover {
+  background: #ebfbee;
+  color: #37b24d;
+}
+
+.favorite-content {
+  padding: 20px;
+}
+
+.favorite-title {
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 8px;
+  font-size: 16px;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.favorite-author {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.favorite-rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+.star {
+  color: #ffd43b;
+  font-size: 14px;
+}
+
+.rating-count {
+  font-size: 12px;
+  color: #999;
+  margin-left: 4px;
+}
+
+.favorite-price {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+
+.price {
+  font-weight: 700;
+  font-size: 18px;
+  color: #4c6ef5;
+}
+
+.discount-price {
+  color: #999;
+  font-size: 14px;
+  text-decoration: line-through;
+  margin-right: 8px;
+}
+
+.btn-view-details {
+  padding: 8px 16px;
+  background: #f8f9fa;
+  color: #495057;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-view-details:hover {
+  background: #e9ecef;
+}
+
+.favorites-empty-state {
+  text-align: center;
+  padding: 80px 40px;
+}
+
+.favorites-empty-icon {
+  margin-bottom: 20px;
+  opacity: 0.3;
+  color: #e64980;
+}
+
+.favorites-empty-state h3 {
+  margin: 0 0 12px;
+  font-size: 20px;
+  color: #1a1a1a;
+}
+
+.favorites-empty-state p {
+  margin: 0 0 24px;
+  color: #666;
+  font-size: 16px;
+}
+
+.btn-browse-books {
+  padding: 12px 24px;
+  background: #e64980;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-browse-books:hover {
+  background: #d6336c;
+  transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+  .favorites-container {
+    padding: 20px;
+  }
+  
+  .favorites-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  
+  .favorites-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 16px;
+  }
+  
+  .favorite-content {
+    padding: 16px;
+  }
+  
+  .favorite-actions {
+    opacity: 1;
+    transform: translateX(0);
+    flex-direction: row;
+  }
+  
+  .btn-favorite-action {
+    width: 32px;
+    height: 32px;
+  }
+}
