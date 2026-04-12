@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { handleAuthLogic } from '../../api/auth/authLogic';
+import { handleAuthLogic } from '../../api/auth/authLogin';
 import { fetchUserDataFromAPI } from '../../api/User/getUser';
 import {
   FaUser, FaBox, FaHeart, FaShoppingCart, FaGoogle, FaEnvelope,
@@ -40,12 +40,11 @@ const Profile = () => {
   const [activeTab, setActiveTab] = useState('profile');
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
-  const [ordersCount, setOrdersCount] = useState(0);   // ← сразу покажем цифру
+  const [ordersCount, setOrdersCount] = useState(0);   
 
   const processedCodeRef = useRef(new Set());
   const hasInitializedRef = useRef(false);
 
-  /* ----------  счётчик заказов  ---------- */
   const fetchOrdersCount = async (email) => {
     if (!email) return;
     try {
@@ -91,7 +90,6 @@ const Profile = () => {
     return <FaUser className="login-icon" />;
   };
 
-  /* ----------  инициализация  ---------- */
   useEffect(() => {
     handleAuthLogic({
       navigate,setUserData,setLoading,processedCodeRef,
@@ -99,7 +97,6 @@ const Profile = () => {
     });
   }, []);
 
-  /* ----------  как только появился email – грузим счётчик  ---------- */
   useEffect(() => {
     if (userData?.email) fetchOrdersCount(userData.email);
   }, [userData]);
