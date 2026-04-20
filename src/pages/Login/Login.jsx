@@ -48,7 +48,6 @@ const Login = () => {
       return;
     }
 
-    // Валидация email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) {
       setError('Пожалуйста, введите корректный email');
@@ -59,7 +58,6 @@ const Login = () => {
     setError('');
 
     try {
-      // POST запрос с query параметрами
       const params = new URLSearchParams({
         email: formData.email,
         password: formData.password
@@ -72,12 +70,8 @@ const Login = () => {
           'Content-Type': 'application/json',
         }
       });
-
-      console.log('POST Request URL:', `http://127.0.0.1:8001/login?${params.toString()}`);
-      console.log('Response status:', response.status);
       
       const responseText = await response.text();
-      console.log('Response text:', responseText);
       
       let data;
       try {
@@ -101,13 +95,11 @@ const Login = () => {
         throw new Error(errorMsg);
       }
 
-      // Обработка успешного ответа
       if (data.token) {
         localStorage.setItem('access_token', data.token);
         localStorage.setItem('token_timestamp', Date.now().toString());
-        localStorage.setItem('login_type', 'email'); // Сохраняем тип входа
+        localStorage.setItem('login_type', 'email');
         
-        // Декодируем токен, чтобы получить email
         try {
           const payload = JSON.parse(atob(data.token.split('.')[1]));
           const email = payload.sub;
@@ -120,9 +112,6 @@ const Login = () => {
           localStorage.setItem('remember_me', 'true');
         }
         
-        console.log('Login successful, token saved');
-        
-        // Получаем дополнительные данные пользователя
         await fetchUserProfileData(data.token);
         
       } else {
@@ -137,11 +126,8 @@ const Login = () => {
     }
   };
 
-  // Функция для получения дополнительных данных пользователя
   const fetchUserProfileData = async (token) => {
     try {
-      // Предположим, что есть эндпоинт для получения профиля пользователя
-      // Если нет, можно добавить его в бэкенд
       const response = await fetch('http://127.0.0.1:8001/api/user/profile', {
         method: 'GET',
         headers: {
@@ -152,33 +138,25 @@ const Login = () => {
 
       if (response.ok) {
         const userData = await response.json();
-        // Сохраняем данные пользователя в localStorage или state
         localStorage.setItem('user_profile', JSON.stringify(userData));
-        console.log('User profile data saved:', userData);
       } else {
-        console.log('Profile endpoint not available, using basic data');
-        // Если эндпоинта нет, сохраняем базовые данные
         saveBasicUserData(token);
       }
     } catch (error) {
       console.error('Error fetching user profile:', error);
       saveBasicUserData(token);
     }
-    
-    // Перенаправляем в профиль
     navigate('/profile');
   };
 
-  // Сохранение базовых данных из токена
   const saveBasicUserData = (token) => {
     try {
       const payload = JSON.parse(atob(token.split('.')[1]));
       const email = payload.sub;
       
-      // Создаем базовый профиль из email
       const basicProfile = {
         email: email,
-        name: email.split('@')[0], // Имя из email
+        name: email.split('@')[0], 
         loginType: 'email',
         isLocalUser: true
       };
@@ -190,7 +168,6 @@ const Login = () => {
     }
   };
 
-  // Проверяем, есть ли сохраненный токен
   React.useEffect(() => {
     const token = localStorage.getItem('access_token');
     if (token) {
