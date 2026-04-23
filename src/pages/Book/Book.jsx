@@ -9,17 +9,13 @@ import {
   FaCalendar, 
   FaFileAlt, 
   FaEnvelope, 
-  FaHashtag,
   FaBarcode,
   FaShoppingCart,
   FaCheck,
   FaTimes,
   FaExclamationTriangle,
   FaSpinner,
-  FaChevronRight,
-  FaBox,
   FaMinusCircle,
-  FaPlusCircle,
   FaInfoCircle
 } from 'react-icons/fa';
 import './Book.css'
@@ -27,7 +23,6 @@ import './Book.css'
 const fmtMoney = v =>
   Number(v).toLocaleString('ru-RU', { minimumFractionDigits: 0 }) + ' ₽';
 
-// Функция для форматирования даты
 const fmtDate = (dateString) => {
   const date = new Date(dateString);
   return date.toLocaleDateString('ru-RU', {
@@ -79,9 +74,6 @@ export default function BookPage() {
   
   if (!book) return null;
 
-  const finalPrice = book.price * (1 - (book.discount || 0) / 100);
-  const discountAmount = book.price - finalPrice;
-
   return (
     <div className="book-page">
       <div className="book-page-container">
@@ -91,20 +83,9 @@ export default function BookPage() {
               <div className="book-page-cover-placeholder">
                 <FaBook className="book-page-icon" />
               </div>
-              {book.discount > 0 && (
-                <div className="book-page-discount-badge">
-                  <FaTag /> -{book.discount}%
-                </div>
-              )}
             </div>
             
             <div className="book-page-stats">
-              <div className="book-page-stat-item">
-                <span className="book-page-stat-label">
-                  <FaHashtag /> ID:
-                </span>
-                <span className="book-page-stat-value">{book.id}</span>
-              </div>
               <div className="book-page-stat-item">
                 <span className="book-page-stat-label">
                   <FaBarcode /> ISBN:
@@ -172,23 +153,9 @@ export default function BookPage() {
 
             <div className="book-page-purchase-section">
               <div className="book-page-price-container">
-                {book.discount > 0 ? (
-                  <>
-                    <div className="book-page-price-original">
-                      <s>{fmtMoney(book.price)}</s>
-                      <span className="book-page-discount-amount">
-                        <FaPlusCircle /> Вы экономите {fmtMoney(discountAmount)}
-                      </span>
-                    </div>
-                    <div className="book-page-price-final">
-                      {fmtMoney(finalPrice)}
-                    </div>
-                  </>
-                ) : (
                   <div className="book-page-price-final book-page-no-discount">
                     {fmtMoney(book.price)}
                   </div>
-                )}
               </div>
 
               <div className="book-page-stock-container">
