@@ -1,6 +1,5 @@
 import { decodeToken, isTokenValid } from '../../utils/tokenUtils';
 
-// Функция для обработки аутентификации через email
 export const processEmailAuth = async ({ 
   accessToken, 
   setUserData, 
@@ -18,7 +17,6 @@ export const processEmailAuth = async ({
   }
 
   try {
-    // Декодируем токен, чтобы получить email
     const decodedToken = decodeToken(accessToken);
     
     if (!decodedToken) {
@@ -31,19 +29,15 @@ export const processEmailAuth = async ({
       throw new Error('Email не найден в токене');
     }
     
-    // Проверяем срок действия токена
     if (!isTokenValid(decodedToken)) {
-      console.log('Token expired');
       alert('Сессия истекла. Пожалуйста, войдите снова.');
       handleEmailLogout(navigate);
       return;
     }
     
-    // Получаем данные пользователя из API с токеном
     const apiUserData = await fetchUserDataFromAPI(email, accessToken);
     
     if (!apiUserData) {
-      // Если не получили данные с токеном, пробуем без него
       console.log('Trying to fetch user data without token...');
       const apiUserDataWithoutToken = await fetchUserDataFromAPI(email);
       
@@ -51,17 +45,14 @@ export const processEmailAuth = async ({
         throw new Error('Не удалось получить данные пользователя');
       }
       
-      // Создаем профиль пользователя из данных API
       const userProfile = createUserProfileFromApiData(apiUserDataWithoutToken, email);
       setUserData(userProfile);
     } else {
-      // Создаем профиль пользователя из данных API
       const userProfile = createUserProfileFromApiData(apiUserData, email);
       setUserData(userProfile);
     }
     
   } catch (error) {
-    console.error('Error processing email login profile:', error);
     alert('Ошибка при загрузке профиля. Пожалуйста, войдите снова.');
     handleEmailLogout(navigate);
   } finally {
@@ -69,9 +60,7 @@ export const processEmailAuth = async ({
   }
 };
 
-// Создание профиля пользователя из данных API
 const createUserProfileFromApiData = (apiUserData, email) => {
-  // Формируем полное имя
   const fullNameParts = [];
   if (apiUserData.first_name) fullNameParts.push(apiUserData.first_name);
   if (apiUserData.middle_name) fullNameParts.push(apiUserData.middle_name);
@@ -85,7 +74,6 @@ const createUserProfileFromApiData = (apiUserData, email) => {
     name: apiUserData.name || email.split('@')[0],
     fullName: fullName,
     
-    // Поля из вашего списка
     first_name: apiUserData.first_name || '',
     middle_name: apiUserData.middle_name || '',
     last_name: apiUserData.last_name || apiUserData.blast_name || '',
@@ -98,7 +86,6 @@ const createUserProfileFromApiData = (apiUserData, email) => {
   return profile;
 };
 
-// Выход из системы для email
 const handleEmailLogout = (navigate) => {
   localStorage.removeItem('access_token');
   localStorage.removeItem('refresh_token');
